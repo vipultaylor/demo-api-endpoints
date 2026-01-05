@@ -4,9 +4,7 @@
   "description": "Demo API endpoints for Salesforce UoW framework demos. Deploy to Vercel for free hosted endpoints.",
   "private": true,
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'No build needed for serverless functions'",
-    "test": "node test/test-endpoints.js"
+    "dev": "vercel dev"
   },
   "keywords": [
     "salesforce",

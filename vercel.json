@@ -1,6 +1,9 @@
 {
   "version": 2,
   "name": "demo-api-endpoints",
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": "",
   "headers": [
     {
       "source": "/api/(.*)",

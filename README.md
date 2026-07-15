@@ -24,6 +24,50 @@ Endpoints available at `http://localhost:3000/api/...`
 
 ---
 
+## Architecture
+
+The Vercel **Hobby plan caps a deployment at 12 Serverless Functions**. Giving every
+endpoint its own file under `api/` burned one function each, so the project hit the
+ceiling as soon as a second demo was added.
+
+Instead, all line-of-business endpoints are served by a **single generic dispatcher**:
+
+```
+api/
+├── [lob]/[service].js     ← ONE function serving every LOB endpoint
+├── _utils.js              ← shared helpers (underscore = not a function)
+├── _lib/
+│   ├── fsc/               ← handler modules (not functions)
+│   │   ├── credit-bureau.js
+│   │   └── ...
+│   └── ps/
+│       ├── companies-house.js
+│       └── ...
+├── echo.js  delay.js  status.js  random-fail.js  index.js   ← 5 utilities
+```
+
+**Total: 6 functions — regardless of how many demos exist.** Public URLs are unchanged
+(`/api/fsc/credit-bureau`, `/api/ps/companies-house`, ...).
+
+### Adding a new LOB (e.g. NPC)
+
+1. Drop handler modules in `api/_lib/npc/<service>.js`. Each exports `async (req, res)`
+   and owns its own CORS / scenario / timeout / failure handling — see any existing
+   handler for the shape.
+2. Register them in the `REGISTRY` in `api/[lob]/[service].js`:
+   ```js
+   npc: {
+       'donor-lookup': require('../_lib/npc/donor-lookup')
+   }
+   ```
+3. Done — `/api/npc/donor-lookup` is live. **No new serverless functions.**
+
+> The registry uses **static** `require()` calls deliberately: Vercel's bundler traces
+> requires statically, so a computed `require('../_lib/' + lob)` would not be bundled
+> and would fail at runtime.
+
+---
+
 ## Available Endpoints
 
 ### FSC Loan Demo Endpoints

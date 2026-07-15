@@ -12,7 +12,7 @@
  * - timeout: Simulates 10s delay
  */
 
-const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, generateRequestId, randomItem } = require('../_utils');
+const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, generateRequestId, randomItem } = require('../../_utils');
 
 // Alert types for different scenarios
 const ALERT_TYPES = {

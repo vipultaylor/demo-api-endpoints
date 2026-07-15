@@ -14,7 +14,7 @@
  * - timeout: Simulates 10s delay
  */
 
-const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, randomItem, generateRequestId } = require('../_utils');
+const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, randomItem, generateRequestId } = require('../../_utils');
 
 const SIC_CODES = [
     { code: '35110', description: 'Production of electricity' },

@@ -11,7 +11,7 @@
  * - timeout: Simulates 10s delay
  */
 
-const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, randomItem, generateRequestId } = require('../_utils');
+const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, randomItem, generateRequestId } = require('../../_utils');
 
 const ADDRESSES = [
     { addressLine1: '10 Millbank', locality: 'London', postalCode: 'SW1P 3GE', classification: 'CO01' },

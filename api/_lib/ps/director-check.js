@@ -13,7 +13,7 @@
  * - timeout: Simulates 10s delay
  */
 
-const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, randomItem, generateRequestId } = require('../_utils');
+const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, randomItem, generateRequestId } = require('../../_utils');
 
 const NAMES = [
     { firstName: 'Jordan', lastName: 'Rivera' },

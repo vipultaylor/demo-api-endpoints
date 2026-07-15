@@ -14,7 +14,7 @@
  * - timeout: Simulates 10s delay
  */
 
-const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, generateRequestId } = require('../_utils');
+const { successResponse, errorResponse, handleCors, getScenario, delay, randomInRange, generateRequestId } = require('../../_utils');
 
 // Credit score factors by scenario
 const FACTORS_BY_SCENARIO = {

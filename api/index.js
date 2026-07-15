@@ -25,6 +25,14 @@ module.exports = async (req, res) => {
                     { path: '/api/fsc/ofac-check', method: 'POST', description: 'Sanctions screening' }
                 ]
             },
+            ps: {
+                description: 'Public Sector (gas & electricity licensing) demo endpoints',
+                endpoints: [
+                    { path: '/api/ps/companies-house', method: 'POST', description: 'Company profile lookup' },
+                    { path: '/api/ps/director-check', method: 'POST', description: 'Director disqualification screening' },
+                    { path: '/api/ps/address-verification', method: 'POST', description: 'OS Places / UPRN address verification' }
+                ]
+            },
             utility: {
                 description: 'Generic testing utilities',
                 endpoints: [
@@ -36,7 +44,7 @@ module.exports = async (req, res) => {
             }
         },
         documentation: 'See README.md for full documentation',
-        scenarioParam: 'All FSC endpoints support ?scenario= parameter: success, fail, timeout, and endpoint-specific scenarios'
+        scenarioParam: 'All FSC and PS endpoints support ?scenario= parameter: success, fail, timeout, and endpoint-specific scenarios'
     }, requestId);
 
     res.status(200).json(response);

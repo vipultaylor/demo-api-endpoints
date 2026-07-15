@@ -36,6 +36,16 @@ Endpoints available at `http://localhost:3000/api/...`
 | `/api/fsc/income-verification` | POST | Payroll verification | `scenario=success\|mismatch\|fail` |
 | `/api/fsc/ofac-check` | POST | Sanctions screening | `scenario=success\|match\|fail` |
 
+### PS Licensing Demo Endpoints
+
+UK gas & electricity licensing (Public Sector) demo.
+
+| Endpoint | Method | Purpose | Query Params |
+|----------|--------|---------|--------------|
+| `/api/ps/companies-house` | POST | Company profile lookup | `scenario=success\|active\|dissolved\|liquidation\|overdue\|not-found\|fail\|timeout` |
+| `/api/ps/director-check` | POST | Director disqualification screening | `scenario=success\|clear\|disqualified\|previously-disqualified\|unmatched\|fail\|timeout` |
+| `/api/ps/address-verification` | POST | OS Places / UPRN address verification | `scenario=success\|ambiguous\|not-found\|fail\|timeout` |
+
 ### Generic Test Endpoints
 
 | Endpoint | Method | Purpose | Query Params |
@@ -49,7 +59,7 @@ Endpoints available at `http://localhost:3000/api/...`
 
 ## Scenario Parameter
 
-All FSC endpoints support a `scenario` query parameter to simulate different outcomes:
+All FSC and PS endpoints support a `scenario` query parameter to simulate different outcomes:
 
 - `scenario=success` - Normal successful response (default)
 - `scenario=fail` - Simulates API error (500)
@@ -157,6 +167,66 @@ System.debug(res.getBody());
     "valueRange": { "low": 425000, "high": 475000 },
     "lastSalePrice": 380000,
     "lastSaleDate": "2020-06-15"
+  }
+}
+```
+
+### Companies House Response
+
+```json
+{
+  "status": "SUCCESS",
+  "requestId": "ch-123456",
+  "timestamp": "2026-07-12T10:30:00Z",
+  "data": {
+    "companyNumber": "12345678",
+    "companyName": "CASCADE ENERGY LIMITED",
+    "companyStatus": "active",
+    "companyType": "ltd",
+    "incorporationDate": "2016-06-12",
+    "registeredOfficeAddress": { "addressLine1": "10 Millbank", "locality": "London", "postalCode": "SW1P 3GE" },
+    "sicCodes": [{ "code": "35140", "description": "Trade of electricity" }],
+    "accounts": { "nextDue": "2027-09-30", "lastMadeUpTo": "2025-12-31", "overdue": false },
+    "hasInsolvencyHistory": false
+  }
+}
+```
+
+### Director Check Response
+
+```json
+{
+  "status": "SUCCESS",
+  "requestId": "dc-123456",
+  "timestamp": "2026-07-12T10:30:00Z",
+  "data": {
+    "organisation": "CASCADE ENERGY LIMITED",
+    "outcome": "CLEAR",
+    "directorsChecked": 3,
+    "disqualifiedCount": 0,
+    "unmatchedCount": 0,
+    "directors": [
+      { "officerId": "OFF-123456", "firstName": "Jordan", "lastName": "Rivera", "role": "director", "disqualified": false, "matchedOnRegister": true }
+    ]
+  }
+}
+```
+
+### Address Verification Response
+
+```json
+{
+  "status": "SUCCESS",
+  "requestId": "av-123456",
+  "timestamp": "2026-07-12T10:30:00Z",
+  "data": {
+    "postcode": "SW1P 3GE",
+    "verified": true,
+    "outcome": "MATCHED",
+    "matchCount": 1,
+    "matches": [
+      { "uprn": "100023336956", "addressLine1": "10 Millbank", "locality": "London", "postalCode": "SW1P 3GE", "matchConfidence": 98 }
+    ]
   }
 }
 ```
